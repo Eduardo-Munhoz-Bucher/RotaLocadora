@@ -10,7 +10,7 @@
         <v-list-item
           v-for="(detalhe, index) in detalhes"
           :key="index"
-          @click="detalhe.click()"
+          @click="abrirModal(index)"
           link
         >
           <v-list-item-title>
@@ -53,28 +53,23 @@ export default {
         {
           title: "Detalhes",
           modal: false,
-          click() {
-            this.modal = true;
-          },
         },
         {
           title: "Editar",
           modal: false,
-          click() {
-            this.modal = true;
-          },
         },
         {
           title: "Deletar",
           modal: false,
-          click() {
-            this.modal = true;
-          },
         },
       ],
     };
   },
   methods: {
+    abrirModal(index) {
+      this.detalhes[index].modal = true;
+    },
+
     handleFechaModalDetalhes() {
       this.detalhes[0].modal = false;
     },

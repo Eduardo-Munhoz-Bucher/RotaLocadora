@@ -273,7 +273,6 @@ export default {
 
   methods: {
     populateYears() {
-      const currentYear = new Date().getFullYear();
       const startYear = 1990;
       const endYear = 2025;
 
