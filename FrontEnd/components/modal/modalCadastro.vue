@@ -244,7 +244,7 @@ export default {
         dtCadastro: null,
       },
       marcas: [
-        "BMW",
+        "Bmw",
         "Chevrolet",
         "Volkswagen",
         "Fiat",
@@ -252,6 +252,7 @@ export default {
         "Ford",
         "Jeep",
         "Audi",
+        "Toyota"
       ],
       proUso: ["Uso pessoal", "Veículo para locação", "Uso da empresa"],
       loading: false,

@@ -136,56 +136,68 @@
 </template>
 
 <script>
-import theHeader from '../components/theHeader.vue'
-import api from '../services/api'
+import theHeader from "../components/theHeader.vue";
+import api from "../services/api";
 
 export default {
-  middleware: 'auth',
+  middleware: "auth",
   components: {
     theHeader,
   },
-  name: 'historico',
+  name: "historico",
   data() {
     return {
       pagAtual: 1,
-      historicoPorPag: 9,
+      historicoPorPag: 10,
       historico: [],
-      filtroPlaca: '',
+      filtroPlaca: "",
       visibilidade: true,
-    }
+    };
   },
 
   computed: {
     paginatedHistorico() {
-      const startIndex = (this.pagAtual - 1) * this.historicoPorPag
-      const endIndex = startIndex + this.historicoPorPag
-      return this.historico.slice(startIndex, endIndex)
+      const start = (this.pagAtual - 1) * this.historicoPorPag;
+      return this.historico.slice(start, start + this.historicoPorPag);
     },
     pagTotal() {
-      return Math.ceil(this.historico.length / this.historicoPorPag)
+      return Math.ceil(this.historico.length / this.historicoPorPag);
     },
   },
 
   methods: {
     limparFiltro() {
-      this.filtroPlaca = ''
-      this.getHistorico()
+      this.filtroPlaca = "";
+      this.getHistorico();
     },
 
     visibilidadeFiltro() {
-      this.visibilidade = !this.visibilidade
+      this.visibilidade = !this.visibilidade;
+    },
+
+    ajustarItensPorPagina() {
+      const altura = window.innerHeight;
+      if (altura >= 900) {
+        this.historicoPorPag = 12;
+      } else if (altura >= 695) {
+        this.historicoPorPag = 10;
+      } else if (altura >= 600) {
+        this.historicoPorPag = 8;
+      } else {
+        this.historicoPorPag = 6;
+      }
     },
 
     async getHistorico() {
-      const response = await api.get('historico')
-      this.historico = response.data
+      const response = await api.get("historico");
+      this.historico = response.data;
     },
 
     formatData(dateString) {
-      const date = new Date(dateString)
-      const dtFormatada = date.toLocaleDateString()
-      const hrFormatada = date.toLocaleTimeString()
-      return `${dtFormatada} às ${hrFormatada}`
+      const date = new Date(dateString);
+      const dtFormatada = date.toLocaleDateString();
+      const hrFormatada = date.toLocaleTimeString();
+      return `${dtFormatada} às ${hrFormatada}`;
     },
 
     async filtrarVeiculos() {
@@ -211,9 +223,17 @@ export default {
   },
 
   mounted() {
-    this.getHistorico()
+    this.getHistorico();
+
+    this.ajustarItensPorPagina();
+
+    window.addEventListener("resize", this.ajustarItensPorPagina);
   },
-}
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.ajustarItensPorPagina);
+  },
+};
 </script>
 
 <style scoped>
@@ -271,7 +291,7 @@ export default {
 .btn-cadastro-veiculo {
   padding: 10px !important;
   font-size: 14px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   color: #ffffff;
   margin-left: 15px;
 }
@@ -292,19 +312,19 @@ export default {
 .v-chip {
   height: 20px;
   font-size: 12px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 400;
 }
 
 ::v-deep .v-text-field input {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px !important;
   font-weight: 400;
 }
 
 ::v-deep .v-select__selection {
   font-size: 14px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 
 ::v-deep .menuable__content__active {
@@ -347,7 +367,7 @@ export default {
 td {
   color: #333333;
   font-size: 12px !important;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 400;
   border-bottom: 1px solid #dfdfdf;
   display: flex;
@@ -367,7 +387,7 @@ td {
   align-items: center;
   height: 48px;
   color: rgba(128, 128, 128, 0.637);
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
 }
 
@@ -382,7 +402,7 @@ td {
 }
 
 ::v-deep .v-pagination > li {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 400;
 }
 </style>

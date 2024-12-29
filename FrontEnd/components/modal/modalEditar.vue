@@ -232,7 +232,7 @@ export default {
       snackbar_erro: false,
       dialogEditarVeiculo: true,
       marcas: [
-        "BMW",
+        "Bmw",
         "Chevrolet",
         "Volkswagen",
         "Fiat",
@@ -240,6 +240,7 @@ export default {
         "Ford",
         "Jeep",
         "Audi",
+        "Toyota"
       ],
       proUso: ["Uso pessoal", "Veículo para locação", "Uso da empresa"],
       placa: null,

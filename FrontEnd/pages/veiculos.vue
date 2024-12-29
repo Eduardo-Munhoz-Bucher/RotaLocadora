@@ -251,7 +251,7 @@ export default {
       dialog: false,
       veiculos: [],
       marcas: [
-        "BMW",
+        "Bmw",
         "Chevrolet",
         "Volkswagen",
         "Fiat",
@@ -259,6 +259,7 @@ export default {
         "Ford",
         "Jeep",
         "Audi",
+        "Toyota",
       ],
       propUso: ["Uso pessoal", "Veículo para locação", "Uso da empresa"],
       filtroMarcas: [],
@@ -281,9 +282,8 @@ export default {
 
   computed: {
     paginatedVeiculo() {
-      const startIndex = (this.pagAtual - 1) * this.veiculoPorPag;
-      const endIndex = startIndex + this.veiculoPorPag;
-      return this.veiculos.slice(startIndex, endIndex);
+      const start = (this.pagAtual - 1) * this.veiculoPorPag;
+      return this.veiculos.slice(start, start + this.veiculoPorPag);
     },
     pagTotal() {
       return Math.ceil(this.veiculos.length / this.veiculoPorPag);
@@ -298,6 +298,19 @@ export default {
 
     visibilidadeFiltro() {
       this.visibilidade = !this.visibilidade;
+    },
+
+    ajustarItensPorPagina() {
+      const altura = window.innerHeight;
+      if (altura >= 900) {
+        this.veiculoPorPag = 12;
+      } else if (altura >= 695) {
+        this.veiculoPorPag = 9;
+      } else if (altura >= 600) {
+        this.veiculoPorPag = 7;
+      } else {
+        this.veiculoPorPag = 5;
+      }
     },
 
     async getVeiculos() {
@@ -339,6 +352,14 @@ export default {
 
   mounted() {
     this.getVeiculos();
+
+    this.ajustarItensPorPagina();
+
+    window.addEventListener("resize", this.ajustarItensPorPagina);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.ajustarItensPorPagina);
   },
 };
 </script>
