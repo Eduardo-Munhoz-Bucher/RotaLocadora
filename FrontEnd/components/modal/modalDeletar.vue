@@ -6,6 +6,12 @@
       :show.sync="snackbar_sucesso"
       @closed="onSuccessClosed"
     />
+    <MsgErro
+      :msg="msg"
+      :timeout="timeout"
+      :show.sync="snackbar_erro"
+      @closed="onErrorClosed"
+    />
     <v-dialog max-width="500" v-model="dialogDeletarVeiculo" persistent>
       <v-card light>
         <v-card-title class="pb-4">
@@ -30,7 +36,13 @@
           <v-btn class="mt-3" text color="#212121" @click="$emit('fechaModal')"
             >CANCELAR</v-btn
           >
-          <v-btn class="mt-3" text color="error" @click="deletarVeiculo(veiculo.id)"
+          <v-btn
+            class="mt-3"
+            text
+            color="error"
+            @click="deletarVeiculo(veiculo.id)"
+            :loading="loading"
+            :disabled="loading"
             >CONFIRMAR</v-btn
           >
         </v-card-actions>
@@ -52,6 +64,8 @@ export default {
       msg: "",
       timeout: 2500,
       snackbar_sucesso: false,
+      snackbar_erro: false,
+      loading: false,
     };
   },
 
@@ -61,6 +75,10 @@ export default {
 
   methods: {
     async deletarVeiculo(id) {
+      this.loading = true;
+      
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       try {
         const req = await fetch(`http://localhost:3333/veiculos/${id}`, {
           method: "DELETE",
@@ -79,10 +97,15 @@ export default {
         this.snackbar_erro = true;
         this.msg = "Erro ao desativar veículo!";
       }
+      this.loading = false;
     },
 
     onSuccessClosed() {
       console.log("Sucesso");
+    },
+
+    onErrorClosed() {
+      console.log("Snackbar de erro fechado.");
     },
   },
 };
@@ -114,5 +137,42 @@ export default {
 
 .v-card__actions > .v-btn.v-btn {
   padding: 0 16px;
+}
+
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

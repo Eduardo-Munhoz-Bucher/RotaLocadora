@@ -28,7 +28,7 @@
 
     <div class="dados">
       <v-toolbar-title>
-        Olá,<br />
+        Olá<br />
         <span>{{ userName }}</span>
       </v-toolbar-title>
 
@@ -121,7 +121,7 @@ export default {
   margin-top: 4px;
 }
 
-span {
+.v-toolbar__title > span {
   font-weight: 700;
 }
 
