@@ -219,6 +219,7 @@ import {
   latitudeRules,
   longitudeRules,
 } from "../../services/validationsRules";
+import api from "../../services/api";
 
 export default {
   components: { MsgSucesso, MsgErro },
@@ -252,7 +253,7 @@ export default {
         "Ford",
         "Jeep",
         "Audi",
-        "Toyota"
+        "Toyota",
       ],
       proUso: ["Uso pessoal", "Veículo para locação", "Uso da empresa"],
       loading: false,
@@ -293,22 +294,23 @@ export default {
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      if (
-        !this.dadosVeiculo.placa ||
-        !this.dadosVeiculo.marca ||
-        !this.dadosVeiculo.modelo ||
-        !this.dadosVeiculo.cor ||
-        !this.dadosVeiculo.ano ||
-        !this.dadosVeiculo.proposito_uso ||
-        !this.dadosVeiculo.latitude ||
-        !this.dadosVeiculo.longitude
-      ) {
-        this.snackbar_erro = true;
+      try {
+        if (
+          !this.dadosVeiculo.placa ||
+          !this.dadosVeiculo.marca ||
+          !this.dadosVeiculo.modelo ||
+          !this.dadosVeiculo.cor ||
+          !this.dadosVeiculo.ano ||
+          !this.dadosVeiculo.proposito_uso ||
+          !this.dadosVeiculo.latitude ||
+          !this.dadosVeiculo.longitude
+        ) {
+          this.snackbar_erro = true;
+          this.msg = "Campos não preenchidos!";
+          this.validate();
+          return;
+        }
 
-        this.msg = "Campos não preenchidos!";
-
-        this.validate();
-      } else {
         const data = {
           placa: this.dadosVeiculo.placa,
           marca: this.dadosVeiculo.marca,
@@ -326,26 +328,26 @@ export default {
           ativo: "1",
         };
 
-        const dataJson = JSON.stringify(data);
+        const response = await api.post("veiculos", data);
 
-        const req = await fetch("http://localhost:3333/veiculos", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: dataJson,
-        });
+        if (response.status === 201 || response.status === 200) {
+          this.snackbar_sucesso = true;
+          this.msg = "Veículo cadastrado com sucesso!";
 
-        const res = await req.json();
+          await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        this.snackbar_sucesso = true;
-        this.msg = "Veículo cadastrado com sucesso!";
-
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        this.$emit("fechaModal");
-        this.$emit("veiculoCadastrado");
+          this.$emit("fechaModal");
+          this.$emit("veiculoCadastrado");
+        } else {
+          throw new Error("Erro ao cadastrar o veículo.");
+        }
+      } catch (error) {
+        console.error("Erro ao criar veículo: ", error);
+        this.snackbar_erro = true;
+        this.msg = "Erro ao cadastrar veículo!";
+      } finally {
+        this.loading = false;
       }
-
-      this.loading = false;
     },
 
     onErrorClosed() {

@@ -220,6 +220,7 @@ import {
   latitudeRules,
   longitudeRules,
 } from "../../services/validationsRules";
+import api from '../../services/api';
 
 export default {
   props: ["veiculo"],
@@ -240,7 +241,7 @@ export default {
         "Ford",
         "Jeep",
         "Audi",
-        "Toyota"
+        "Toyota",
       ],
       proUso: ["Uso pessoal", "Veículo para locação", "Uso da empresa"],
       placa: null,
@@ -302,23 +303,24 @@ export default {
 
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
-      if (
-        !this.placa ||
-        !this.marca ||
-        !this.modelo ||
-        !this.cor ||
-        !this.ano ||
-        !this.proposito_uso ||
-        !this.latitude ||
-        !this.longitude ||
-        !this.conforto
-      ) {
-        this.snackbar_erro = true;
+      try {
+        if (
+          !this.placa ||
+          !this.marca ||
+          !this.modelo ||
+          !this.cor ||
+          !this.ano ||
+          !this.proposito_uso ||
+          !this.latitude ||
+          !this.longitude ||
+          !this.conforto
+        ) {
+          this.snackbar_erro = true;
+          this.msg = "Campos não preenchidos!";
+          this.validate();
+          return;
+        }
 
-        this.msg = "Campos não preenchidos!";
-
-        this.validate();
-      } else {
         const data = {
           placa: this.placa,
           marca: this.marca,
@@ -336,25 +338,25 @@ export default {
           ativo: true,
         };
 
-        const dataJson = JSON.stringify(data);
+        const response = await api.put(`veiculos/${id}`, data);
 
-        const req = await fetch(`http://localhost:3333/veiculos/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: dataJson,
-        });
+        if (response.status === 200 || response.status === 201) {
+          this.snackbar_sucesso = true;
+          this.msg = "Veículo editado com sucesso!";
 
-        const res = await req.json();
+          await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        this.snackbar_sucesso = true;
-        this.msg = "Veículo editado com sucesso!";
-
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        this.$emit("fechaModal");
+          this.$emit("fechaModal");
+        } else {
+          throw new Error("Erro ao editar veículo.");
+        }
+      } catch (error) {
+        console.error("Erro ao editar veículo: ", error);
+        this.snackbar_erro = true;
+        this.msg = "Erro ao editar veículo!";
+      } finally {
+        this.loading = false;
       }
-
-      this.loading = false;
     },
 
     onErrorClosed() {
