@@ -326,26 +326,18 @@ export default {
 
     async filtrarVeiculos() {
       try {
-        const filtroMarcas = this.filtroMarcas.join(",");
-        const filtroProp = this.filtroProp.trim();
-        const filtroPlaca = this.filtroPlaca.trim();
+        const params = {};
 
-        const url = new URL("http://localhost:3333/veiculos");
+        if (this.filtroMarcas.length)
+          params.marca = this.filtroMarcas.join(",");
+        if (this.filtroProp.trim()) params.proposito = this.filtroProp.trim();
+        if (this.filtroPlaca.trim()) params.placa = this.filtroPlaca.trim();
 
-        if (filtroMarcas) url.searchParams.append("marca", filtroMarcas);
-        if (filtroProp) url.searchParams.append("proposito", filtroProp);
-        if (filtroPlaca) url.searchParams.append("placa", filtroPlaca);
+        const response = await api.get("veiculos", { params });
 
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error("Erro ao buscar veículos");
-        }
-
-        const data = await response.json();
-        this.veiculos = data;
+        this.veiculos = response.data;
       } catch (error) {
-        console.error("Erro no filtro: ", error);
+        console.error("Erro ao filtrar veículo(s): ", error);
       }
     },
   },

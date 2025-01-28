@@ -202,22 +202,17 @@ export default {
 
     async filtrarVeiculos() {
       try {
-        const filtroPlaca = this.filtroPlaca.trim();
+        const params = {};
 
-        const url = new URL("http://localhost:3333/historico");
-
-        if (filtroPlaca) url.searchParams.append("placa", filtroPlaca);
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error("Erro ao buscar histórico");
+        if (this.filtroPlaca.trim()) {
+          params.placa = this.filtroPlaca.trim();
         }
 
-        const data = await response.json();
-        this.historico = data;
+        const response = await api.get("historico", { params });
+
+        this.historico = response.data;
       } catch (error) {
-        console.error("Erro no filtro: ", error);
+        console.error("Erro ao filtrar histórico: ", error);
       }
     },
   },
