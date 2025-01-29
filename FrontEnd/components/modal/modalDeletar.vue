@@ -53,10 +53,12 @@
 
 <script>
 import MsgSucesso from "../snackbar/msgSucesso.vue";
+import MsgErro from "../snackbar/msgErro.vue";
+import api from "../../services/api";
 
 export default {
   props: ["veiculo"],
-  components: { MsgSucesso },
+  components: { MsgSucesso, MsgErro },
   data() {
     return {
       dialogDeletarVeiculo: true,
@@ -76,28 +78,29 @@ export default {
   methods: {
     async deletarVeiculo(id) {
       this.loading = true;
-      
+
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
       try {
-        const req = await fetch(`http://localhost:3333/veiculos/${id}`, {
-          method: "DELETE",
-        });
+        const response = await api.delete(`veiculos/${id}`);
 
-        const res = await req.json();
+        if (response.status === 200 || response.status === 204) {
+          this.snackbar_sucesso = true;
+          this.msg = "Veículo deletado com sucesso!";
 
-        this.snackbar_sucesso = true;
-        this.msg = "Veículo deletado com sucesso!";
+          await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        this.$emit("fechaModal");
+          this.$emit("fechaModal");
+        } else {
+          throw new Error("Erro ao deletar o veículo.");
+        }
       } catch (error) {
-        console.error("Erro ao desativar veículo:", error);
+        console.error("Erro ao deletar veículo:", error);
         this.snackbar_erro = true;
-        this.msg = "Erro ao desativar veículo!";
+        this.msg = "Erro ao deletar veículo!";
+      } finally {
+        this.loading = false;
       }
-      this.loading = false;
     },
 
     onSuccessClosed() {

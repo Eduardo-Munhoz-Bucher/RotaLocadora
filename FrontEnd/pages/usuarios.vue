@@ -139,8 +139,9 @@ import {
   aniversarioRules,
   emailRules,
   senhaRules,
-  confirmarSenhaRule  ,
+  confirmarSenhaRule,
 } from "../services/validationsRules";
+import api from '../services/api'
 
 export default {
   name: "IndexPage",
@@ -178,7 +179,7 @@ export default {
 
     confirmaSenhaRules() {
       return confirmarSenhaRule(this.formData.senha);
-    }
+    },
   },
 
   methods: {
@@ -191,7 +192,6 @@ export default {
 
     async criarUsuario(e) {
       e.preventDefault();
-
       this.loading = true;
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -203,38 +203,39 @@ export default {
         !this.formData.senha
       ) {
         this.snackbar_erro = true;
-
         this.msg = "Campos não preenchidos!";
-
         this.validate();
-      } else {
-        const data = {
-          nome_user: this.formData.nome_user,
-          dt_aniversario: this.formData.dt_aniversario,
-          email: this.formData.email,
-          senha: this.formData.senha,
-        };
-
-        const dataJson = JSON.stringify(data);
-
-        const req = await fetch("http://localhost:3333/usuarios", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: dataJson,
-        });
-
-        const res = await req.json();
-
-        this.snackbar_sucesso = true;
-
-        this.msg = "Usuário cadastrado com sucesso!";
-
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        this.$router.push({ path: "/" });
+        this.loading = false;
+        return;
       }
 
-      this.loading = false;
+      const data = {
+        nome_user: this.formData.nome_user,
+        dt_aniversario: this.formData.dt_aniversario,
+        email: this.formData.email,
+        senha: this.formData.senha,
+      };
+
+      try {
+        const response = await api.post("usuarios", data);
+
+        if (response.status === 201 || response.status === 200) {
+          this.snackbar_sucesso = true;
+          this.msg = "Usuário cadastrado com sucesso!";
+
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+
+          this.$router.push({ path: "/" });
+        } else {
+          throw new Error("Erro ao criar usuário.");
+        }
+      } catch (error) {
+        console.error("Erro ao criar usuário:", error);
+        this.snackbar_erro = true;
+        this.msg = "Erro ao criar usuário!";
+      } finally {
+        this.loading = false;
+      }
     },
 
     validate() {
