@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       formData: {
-        nome_user: '',
+        nome_user: "",
         email: "",
         senha: "",
       },
@@ -99,40 +99,27 @@ export default {
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      const response = await api.get("usuarios", {
-        params: {
-          nome_user: this.formData.nome_user,
+      try {
+        const response = await api.post("login", {
           email: this.formData.email,
           senha: this.formData.senha,
-        },
-      });
-      const users = response.data;
-      const user = users.find(
-        (user) =>
-          user.email === this.formData.email &&
-          user.senha === this.formData.senha
-      );
+        });
 
-      if (user) {
         this.snackbar_sucesso = true;
         this.msg = "Login realizado com sucesso!";
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        this.$store.commit("auth/login", user.nome_user);
+        this.$store.commit("auth/login", response.data.usuario.nome_user);
 
         this.$router.push({ path: "/veiculos" });
-      } else if (!this.formData.email || !this.formData.senha) {
+      } catch (error) {
         this.snackbar_erro = true;
-        this.msg = "Campos não preenchidos!";
-        this.validate();
-      } else {
-        this.snackbar_erro = true;
-        this.msg = "E-mail ou senha incorretos!";
+        this.msg =
+          error.response?.data?.message || "Erro ao fazer logn!";
       }
 
       this.loading = false;
-
     },
 
     onErrorClosed() {
@@ -141,7 +128,6 @@ export default {
 
     onSuccessClosed() {
       console.log("Snackbar de sucesso fechado");
-      
     },
 
     validate() {
