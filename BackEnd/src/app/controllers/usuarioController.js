@@ -9,6 +9,9 @@ class usuarioController {
   async storyUsuario(req, res) {
     const usuario = req.body;
     const novoUsuario  = await usuarioModel.createUsuario(usuario);
+
+    delete novoUsuario.senha;
+
     res.status(201).json({
       message: "Usuário cadastrado com sucesso",
       usuario: novoUsuario ,
