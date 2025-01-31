@@ -6,7 +6,7 @@
           <v-icon dense>mdi-dots-horizontal</v-icon>
         </v-btn>
       </template>
-      <v-list color="#fff">
+      <v-list color="#FFF">
         <v-list-item
           v-for="(detalhe, index) in detalhes"
           :key="index"
@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 .v-list-item:hover {
-  background: #dfdfdf;
+  background: #DFDFDF;
 }
 
 .v-list {

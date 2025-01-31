@@ -16,7 +16,7 @@
     <v-dialog max-width="700" v-model="dialogEditarVeiculo" persistent>
       <v-card light>
         <div class="d-flex justify-space-between">
-          <v-toolbar color="#007DF0" class="white--color">
+          <v-toolbar color="primary" class="white--color">
             <div class="header">
               <v-card-text class="white--text">Editar Veículo</v-card-text>
               <span>{{ veiculo.placa }}</span>
@@ -177,8 +177,8 @@
                 >
                 <v-rating
                   v-model="conforto"
-                  background-color="#007DF0"
-                  color="#007DF0"
+                  background-color="primary"
+                  color="primary"
                   size="32"
                 ></v-rating>
               </div>
@@ -188,14 +188,14 @@
             <v-checkbox
               v-model="veiculo_zero"
               label="Veículo zero-quilômetro"
-              color="#007df0"
+              color="primary"
               ripple
             ></v-checkbox>
           </v-container>
           <v-card-actions>
             <v-btn
               class="btn-salvar-modal"
-              color="#007DF0"
+              color="primary"
               :loading="loading"
               :disabled="loading"
               @click="editarVeiculo(veiculo.id)"
@@ -398,7 +398,7 @@ export default {
 .header > span {
   font-size: 16px !important;
   font-weight: normal;
-  color: #fff !important;
+  color: #FFF !important;
 }
 
 .header {
@@ -423,7 +423,7 @@ export default {
   font-size: 18px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #fff;
+  color: #FFF;
 }
 
 .v-card__subtitle {
@@ -451,8 +451,8 @@ export default {
 }
 
 .header-year {
-  color: #fff;
-  background-color: #3366cc;
+  color: #FFF;
+  background-color: #3366CC;
   font-size: 12px;
   font-weight: 400;
   height: 38px;
@@ -498,7 +498,7 @@ export default {
 }
 
 ::v-deep .v-messages__message {
-  color: #ff5252;
+  color: var(--error);
   font-family: "Roboto";
 }
 
@@ -517,7 +517,7 @@ export default {
   font-weight: 400;
   text-transform: none;
   font-family: "Roboto";
-  color: #fff;
+  color: #FFF;
 }
 
 .custom-loader {

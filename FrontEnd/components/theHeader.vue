@@ -102,11 +102,11 @@ export default {
 
 .active-btn {
   background-color: rgba(0, 125, 240, 0.1);
-  color: #007df0; 
+  color: var(--primary); 
 }
 
 .cor-btn {
-  background-color: #dfdfdf;
+  background-color: #DFDFDF;
   color: #000; 
 }
 
@@ -132,11 +132,11 @@ export default {
 }
 
 .div-sair:hover {
-  background-color: #dfdfdf;
+  background-color: #DFDFDF;
 }
 
 .theme--dark.v-card {
-  background-color: #ffffff;
+  background-color: #FFF;
 }
 
 .v-list-item__content {
@@ -150,7 +150,7 @@ export default {
 }
 
 .btn-sair {
-  color: #e8363b;
+  color: var(--color-red);
   margin: 0;
   font-size: 14px;
   font-weight: 400;

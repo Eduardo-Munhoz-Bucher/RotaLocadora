@@ -16,7 +16,7 @@
     <v-dialog max-width="700" v-model="dialogCadastrarVeiculo" persistent>
       <v-card light>
         <div class="d-flex justify-space-between">
-          <v-toolbar color="#007DF0" class="white--color">
+          <v-toolbar color="primary" class="white--color">
             <v-card-text class="white--text">Cadastro de Veículo</v-card-text>
             <v-btn text icon @click="$emit('fechaModal')">
               <img src="../../assets/img/xmark.png" alt="clone" />
@@ -175,8 +175,8 @@
                 >
                 <v-rating
                   v-model="dadosVeiculo.conforto"
-                  background-color="#007DF0"
-                  color="#007DF0"
+                  background-color="primary"
+                  color="primary"
                   size="32"
                 ></v-rating>
               </div>
@@ -186,14 +186,14 @@
             <v-checkbox
               v-model="dadosVeiculo.veiculo_zero"
               label="Veículo zero-quilômetro"
-              color="#007df0"
+              color="primary"
               ripple
             ></v-checkbox>
           </v-container>
           <v-card-actions>
             <v-btn
               class="btn-salvar-modal"
-              color="#007DF0"
+              color="primary"
               :loading="loading"
               :disabled="loading"
               @click="criarVeiculo"
@@ -403,7 +403,7 @@ export default {
   font-size: 18px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #fff;
+  color: #FFF;
 }
 
 .v-card__subtitle {
@@ -438,8 +438,8 @@ export default {
 }
 
 .header-year {
-  color: #fff;
-  background-color: #3366cc;
+  color: #FFF;
+  background-color: #3366CC;
   font-size: 12px;
   font-weight: 400;
   height: 38px;
@@ -489,7 +489,7 @@ export default {
 }
 
 ::v-deep .v-messages__message {
-  color: #ff5252;
+  color: var(--error);
   font-family: "Roboto";
 }
 
@@ -508,7 +508,7 @@ export default {
   font-weight: 400;
   text-transform: none;
   font-family: "Roboto";
-  color: #fff;
+  color: #FFF;
 }
 
 .custom-loader {

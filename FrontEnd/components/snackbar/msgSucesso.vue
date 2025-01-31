@@ -75,8 +75,8 @@ export default {
 }
 
 ::v-deep .v-snack__content {
-  color: #ffffff;
-  background-color: #4caf50;
+  color: #FFF;
+  background-color: var(--color-success);
   border-radius: 5px;
 }
 

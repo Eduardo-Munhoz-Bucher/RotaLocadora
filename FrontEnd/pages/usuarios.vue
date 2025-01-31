@@ -113,7 +113,7 @@
             @click:append="showConfirmPassword = !showConfirmPassword"
           ></v-text-field>
           <v-btn
-            color="#007DF0"
+            color="primary"
             class="button"
             block
             large
@@ -308,12 +308,12 @@ export default {
 }
 
 ::v-deep .v-messages__message {
-  color: #ff5252;
+  color: var(--error);
   font-family: "Roboto";
 }
 
 ::v-deep .v-picker__title {
-  background-color: #3366cc;
+  background-color: #3366CC;
 }
 
 ::v-deep .v-date-picker-title__year {
@@ -339,11 +339,11 @@ export default {
 }
 
 ::v-deep .v-btn--outlined {
-  color: #3366cc;
+  color: #3366CC;
 }
 
 ::v-deep .v-btn--active {
-  background-color: #3366cc;
+  background-color: #3366CC;
 }
 
 ::v-deep .v-date-picker-years {
@@ -351,7 +351,7 @@ export default {
 }
 
 ::v-deep .active {
-  color: #3366cc;
+  color: #3366CC;
   font-size: 20px;
   font-weight: 700;
 }
@@ -372,7 +372,7 @@ export default {
   font-family: "Roboto";
   font-weight: 400;
   line-height: 18px;
-  color: #fff;
+  color: #FFF;
 }
 
 .novoLogin {
@@ -385,7 +385,7 @@ export default {
 
 .novoLogin > a {
   text-decoration: none;
-  color: #a9a7a9;
+  color: #A9A7A9;
   transition: 0.3s;
 }
 

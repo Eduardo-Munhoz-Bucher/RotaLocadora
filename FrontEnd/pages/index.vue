@@ -13,7 +13,7 @@
       @closed="onErrorClosed"
     />
 
-    <v-card color="#fff" class="formulario" rounded-xl>
+    <v-card color="#FFF" class="formulario" rounded-xl>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
           <div class="logo-garagem">
@@ -47,7 +47,7 @@
             @click:append="showPassword = !showPassword"
           ></v-text-field>
           <v-btn
-            color="#007DF0"
+            color="primary"
             class="button"
             block
             large
@@ -192,7 +192,7 @@ export default {
 }
 
 ::v-deep .v-messages__message {
-  color: #ff5252;
+  color: var(--error);
   font-family: "Roboto";
 }
 
@@ -212,7 +212,7 @@ export default {
   font-family: "Roboto";
   font-weight: 400;
   line-height: 18px;
-  color: #fff;
+  color: #FFF;
 }
 
 .novaConta {
@@ -225,7 +225,7 @@ export default {
 
 .novaConta > a {
   text-decoration: none;
-  color: #a9a7a9;
+  color: #A9A7A9;
   transition: 0.3s;
 }
 

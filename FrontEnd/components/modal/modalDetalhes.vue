@@ -3,7 +3,7 @@
     <v-dialog max-width="850" v-model="dialog" persistent>
       <v-card light>
         <div class="d-flex justify-space-between">
-          <v-toolbar color="#007DF0" class="white--color">
+          <v-toolbar color="primary" class="white--color">
             <div class="header">
               <v-card-text class="white--text">Detalhes do Veículo</v-card-text>
               <span>{{ veiculo.placa }}</span>
@@ -209,7 +209,7 @@ export default {
 .header > span {
   font-size: 16px !important;
   font-weight: normal;
-  color: #fff !important;
+  color: #FFF !important;
 }
 
 .header {
@@ -274,7 +274,7 @@ export default {
 
 ::v-deep .v-rating .v-icon {
   padding: 0 0 0 4px;
-  color: #007df0;
+  color: var(--primary);
 }
 
 .card-leaflet {

@@ -6,7 +6,7 @@
       <v-container fluid data-app class="container-filtros">
         <v-btn
           class="btn-cadastro-veiculo"
-          color="#007DF0"
+          color="primary"
           @click="modal = true"
         >
           Cadastrar Veículo
@@ -164,7 +164,7 @@
             </thead>
           </template>
         </v-simple-table>
-        <v-progress-linear indeterminate color="#007df0"></v-progress-linear>
+        <v-progress-linear indeterminate color="primary"></v-progress-linear>
         <div class="buscando">
           <p class="mb-0">Buscando...</p>
         </div>
@@ -220,7 +220,7 @@
             v-model="pagAtual"
             :length="pagTotal"
             @input="getVeiculos"
-            color="#3366cc"
+            color="#3366CC"
           ></v-pagination>
         </div>
       </v-footer>
@@ -395,12 +395,12 @@ export default {
 
 .btn-left {
   border-radius: 5px 0 0 5px;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #DFDFDF;
 }
 
 .btn-right {
   border-radius: 0 5px 5px 0;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #DFDFDF;
   transform: translateX(-5px);
 }
 
@@ -414,7 +414,7 @@ export default {
   font-size: 16px;
   font-family: "Roboto";
   font-weight: 700;
-  color: #ffffff;
+  color: #FFF;
   margin-left: 15px;
 }
 
@@ -450,7 +450,7 @@ export default {
   font-size: 14px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #a9a7a9 !important;
+  color: #A9A7A9 !important;
 }
 
 .v-list {
@@ -462,11 +462,11 @@ export default {
 }
 
 ::v-deep .theme--dark.v-icon {
-  color: #a9a7a9;
+  color: #A9A7A9;
 }
 
 ::v-deep .v-list .v-list-item--active .v-icon {
-  color: #3366cc !important;
+  color: #3366CC !important;
 }
 
 ::v-deep .v-list-item__title {
@@ -478,7 +478,7 @@ export default {
 }
 
 .header-select {
-  color: #a9a7a9 !important;
+  color: #A9A7A9 !important;
   font-size: 12px !important;
   font-weight: 400 !important;
 }
@@ -509,7 +509,7 @@ export default {
   > thead
   > tr
   > th {
-  color: #007df0 !important;
+  color: var(--primary) !important;
   font-weight: 700;
   font-size: 14px;
 }
@@ -523,7 +523,7 @@ td {
   font-size: 12px !important;
   font-family: "Roboto";
   font-weight: 400;
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid #DFDFDF;
 }
 
 .conforto {
@@ -560,7 +560,7 @@ td {
 }
 
 .v-footer {
-  background-color: #fff;
+  background-color: #FFF;
   display: flex;
   justify-content: center;
   position: fixed;

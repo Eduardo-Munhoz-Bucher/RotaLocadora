@@ -1,3 +1,9 @@
+:root {
+  --primary: #007DF0;
+  --color-red: #E8363B;
+  --color-success: #4CAF50;
+}
+
 ::-webkit-scrollbar {
   width: 0 !important;
 }

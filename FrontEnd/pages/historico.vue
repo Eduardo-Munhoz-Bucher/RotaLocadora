@@ -127,7 +127,7 @@
             v-model="pagAtual"
             :length="pagTotal"
             @input="getHistorico"
-            color="#3366cc"
+            color="#3366CC"
           ></v-pagination>
         </div>
       </v-footer>
@@ -270,12 +270,12 @@ export default {
 
 .btn-left {
   border-radius: 5px 0 0 5px;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #DFDFDF;
 }
 
 .btn-right {
   border-radius: 0 5px 5px 0;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #DFDFDF;
   transform: translateX(-5px);
 }
 
@@ -287,7 +287,7 @@ export default {
   padding: 10px !important;
   font-size: 14px;
   font-family: "Roboto";
-  color: #ffffff;
+  color: #FFF;
   margin-left: 15px;
 }
 
@@ -327,7 +327,7 @@ export default {
 }
 
 .v-select-list {
-  background-color: #fff;
+  background-color: #FFF;
 }
 
 ::v-deep .v-list-item__action {
@@ -339,11 +339,11 @@ export default {
 }
 
 ::v-deep .theme--dark.v-icon {
-  color: #a9a7a9;
+  color: #A9A7A9;
 }
 
 ::v-deep .v-list .v-list-item--active .v-icon {
-  color: #3366cc !important;
+  color: #3366CC !important;
 }
 
 ::v-deep .v-list-item__title {
@@ -364,7 +364,7 @@ td {
   font-size: 12px !important;
   font-family: "Roboto";
   font-weight: 400;
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid #DFDFDF;
   display: flex;
   align-items: center;
 }
@@ -387,7 +387,7 @@ td {
 }
 
 .v-footer {
-  background-color: #fff;
+  background-color: #FFF;
   display: flex;
   justify-content: center;
   position: fixed;
