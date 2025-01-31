@@ -15,13 +15,17 @@ export const emailRules = [
 
 export const senhaRules = [
   (v) => !!v || "Senha é obrigatória",
-  (v) => (v && v.length >= 8) || "Mínimo 8 dígitos",
+  (v) => (v && v.length >= 8) || "Mínimo 8 caracteres",
+  (v) => /[A-Za-z]/.test(v) || "Deve conter pelo menos 1 letra",
+  (v) => /[0-9]/.test(v) || "Deve conter pelo menos 1 número",
+  (v) =>
+    /[^A-Za-z0-9]/.test(v) || "Deve conter pelo menos 1 caractere especial",
 ];
 
-export const confirmarSenhaRule = senha => [
+export const confirmarSenhaRule = (senha) => [
   (v) => !!v || "Confirmação é obrigatória",
-  v => v === senha || "Senhas não são iguais",
-]
+  (v) => v === senha || "Senhas não são iguais",
+];
 
 export const placaRules = [
   (v) => !!v || "Campo obrigatório",
