@@ -28,7 +28,7 @@
               />
             </v-btn>
             <v-slide-x-reverse-transition>
-              <div v-show="visibilidade" class="visibilidade">
+              <div v-if="visibilidade" class="visibilidade">
                 <v-col cols="1" class="buttons">
                   <div>
                     <v-btn
@@ -210,7 +210,7 @@
           </template>
         </v-data-table>
 
-        <div v-if="veiculos == !veiculos" class="semVeiculo">
+        <div v-if="veiculos.length === 0" class="semVeiculo">
           <p class="mb-0">Nenhum veículo encontrado</p>
         </div>
       </v-card>
