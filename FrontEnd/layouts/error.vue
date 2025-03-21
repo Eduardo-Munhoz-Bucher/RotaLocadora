@@ -1,14 +1,9 @@
 <template>
-  <v-app light>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+  <v-app class="app">
+    <div>
+      <img src="../assets/img/Gif.gif" alt="Gif" height="300px">
+      <h1>Opss... página não encontrada.</h1>
+    </div>
   </v-app>
 </template>
 
@@ -28,18 +23,23 @@ export default {
       otherError: 'An error occurred'
     }
   },
-  head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  }
 }
 </script>
 
 <style scoped>
+::v-deep .v-application--wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+}
+
 h1 {
-  font-size: 20px;
+  font-size: 24px;
+  color: #5e5e5e;
 }
 </style>

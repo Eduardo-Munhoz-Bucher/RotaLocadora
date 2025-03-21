@@ -200,7 +200,8 @@ export default {
         !this.formData.nome_user ||
         !this.formData.dt_aniversario ||
         !this.formData.email ||
-        !this.formData.senha
+        !this.formData.senha ||
+        !this.formData.confirmaSenha
       ) {
         this.snackbar_erro = true;
         this.msg = "Campos não preenchidos!";
