@@ -141,7 +141,7 @@ import {
   senhaRules,
   confirmarSenhaRule,
 } from "../services/validationsRules";
-import api from '../services/api'
+import api from "../services/api";
 
 export default {
   name: "IndexPage",
@@ -210,14 +210,21 @@ export default {
         return;
       }
 
-      const data = {
-        nome_user: this.formData.nome_user,
-        dt_aniversario: this.formData.dt_aniversario,
-        email: this.formData.email,
-        senha: this.formData.senha,
-      };
+      if (this.formData.senha !== this.formData.confirmaSenha) {
+        this.snackbar_erro = true;
+        this.msg = "Senhas divergentes";
+        this.loading = false;
+        return;
+      }
 
       try {
+        const data = {
+          nome_user: this.formData.nome_user,
+          dt_aniversario: this.formData.dt_aniversario,
+          email: this.formData.email,
+          senha: this.formData.senha,
+        };
+
         const response = await api.post("usuarios", data);
 
         if (response.status === 201 || response.status === 200) {
@@ -314,7 +321,7 @@ export default {
 }
 
 ::v-deep .v-picker__title {
-  background-color: #3366CC;
+  background-color: #3366cc;
 }
 
 ::v-deep .v-date-picker-title__year {
@@ -340,11 +347,11 @@ export default {
 }
 
 ::v-deep .v-btn--outlined {
-  color: #3366CC;
+  color: #3366cc;
 }
 
 ::v-deep .v-btn--active {
-  background-color: #3366CC;
+  background-color: #3366cc;
 }
 
 ::v-deep .v-date-picker-years {
@@ -352,7 +359,7 @@ export default {
 }
 
 ::v-deep .active {
-  color: #3366CC;
+  color: #3366cc;
   font-size: 20px;
   font-weight: 700;
 }
@@ -373,7 +380,7 @@ export default {
   font-family: "Roboto";
   font-weight: 400;
   line-height: 18px;
-  color: #FFF;
+  color: #fff;
 }
 
 .novoLogin {
@@ -386,7 +393,7 @@ export default {
 
 .novoLogin > a {
   text-decoration: none;
-  color: #A9A7A9;
+  color: #a9a7a9;
   transition: 0.3s;
 }
 
