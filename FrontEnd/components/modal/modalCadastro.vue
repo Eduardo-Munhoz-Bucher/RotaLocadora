@@ -219,7 +219,6 @@ import {
   latitudeRules,
   longitudeRules,
 } from "../../services/validationsRules";
-import api from "../../services/api";
 
 export default {
   components: { MsgSucesso, MsgErro },
@@ -328,7 +327,7 @@ export default {
           ativo: "1",
         };
 
-        const response = await api.post("veiculos", data);
+        const response = await this.$veiculoService.postVeiculo(data);
 
         if (response.status === 201 || response.status === 200) {
           this.snackbar_sucesso = true;

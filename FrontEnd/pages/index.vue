@@ -68,7 +68,6 @@
 <script>
 import MsgSucesso from "../components/snackbar/msgSucesso.vue";
 import MsgErro from "../components/snackbar/msgErro.vue";
-import api from "../services/api";
 import { emailRules } from "../services/validationsRules";
 
 export default {
@@ -100,10 +99,12 @@ export default {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       try {
-        const response = await api.post("login", {
+        const data = {
           email: this.formData.email,
           senha: this.formData.senha,
-        });
+        };
+
+        const response = await this.$usuarioService.postUsuarioLogin(data)
 
         this.snackbar_sucesso = true;
         this.msg = "Login realizado com sucesso!";
@@ -115,8 +116,7 @@ export default {
         this.$router.push({ path: "/veiculos" });
       } catch (error) {
         this.snackbar_erro = true;
-        this.msg =
-          error.response?.data?.message || "Erro ao fazer logn!";
+        this.msg = error.response?.data?.message || "Erro ao fazer logn!";
       }
 
       this.loading = false;
@@ -212,7 +212,7 @@ export default {
   font-family: "Roboto";
   font-weight: 400;
   line-height: 18px;
-  color: #FFF;
+  color: #fff;
 }
 
 .novaConta {
@@ -225,7 +225,7 @@ export default {
 
 .novaConta > a {
   text-decoration: none;
-  color: #A9A7A9;
+  color: #a9a7a9;
   transition: 0.3s;
 }
 

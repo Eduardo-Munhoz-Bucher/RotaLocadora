@@ -137,7 +137,6 @@
 
 <script>
 import theHeader from "../components/theHeader.vue";
-import api from "../services/api";
 
 export default {
   middleware: "auth",
@@ -189,8 +188,12 @@ export default {
     },
 
     async getHistorico() {
-      const response = await api.get("historico");
-      this.historico = response.data;
+      try {
+        const response = await this.$veiculoService.getHistorico();
+        this.historico = response.data;
+      } catch (error) {
+        console.error("Erro ao buscar histórico: ", error);
+      }
     },
 
     formatData(dateString) {
@@ -208,7 +211,7 @@ export default {
           params.placa = this.filtroPlaca.trim();
         }
 
-        const response = await api.get("historico", { params });
+        const response = await this.$axios.get("historico", { params });
 
         this.historico = response.data;
       } catch (error) {
@@ -270,12 +273,12 @@ export default {
 
 .btn-left {
   border-radius: 5px 0 0 5px;
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
 }
 
 .btn-right {
   border-radius: 0 5px 5px 0;
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
   transform: translateX(-5px);
 }
 
@@ -287,7 +290,7 @@ export default {
   padding: 10px !important;
   font-size: 14px;
   font-family: "Roboto";
-  color: #FFF;
+  color: #fff;
   margin-left: 15px;
 }
 
@@ -327,7 +330,7 @@ export default {
 }
 
 .v-select-list {
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 ::v-deep .v-list-item__action {
@@ -339,11 +342,11 @@ export default {
 }
 
 ::v-deep .theme--dark.v-icon {
-  color: #A9A7A9;
+  color: #a9a7a9;
 }
 
 ::v-deep .v-list .v-list-item--active .v-icon {
-  color: #3366CC !important;
+  color: #3366cc !important;
 }
 
 ::v-deep .v-list-item__title {
@@ -364,7 +367,7 @@ td {
   font-size: 12px !important;
   font-family: "Roboto";
   font-weight: 400;
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
   display: flex;
   align-items: center;
 }
@@ -387,7 +390,7 @@ td {
 }
 
 .v-footer {
-  background-color: #FFF;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   position: fixed;

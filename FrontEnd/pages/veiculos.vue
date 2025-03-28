@@ -232,7 +232,6 @@
 import dropdownVeiculos from "../components/dropdownVeiculos.vue";
 import theHeader from "../components/theHeader.vue";
 import modalCadastro from "../components/modal/modalCadastro.vue";
-import api from "../services/api";
 
 export default {
   middleware: "auth",
@@ -314,9 +313,14 @@ export default {
     },
 
     async getVeiculos() {
-      const response = await api.get("veiculos?ativo=1");
-      this.veiculos = response.data;
-      this.loading = false;
+      try {
+        const response = await this.$veiculoService.getVeiculos();
+        this.veiculos = response;
+      } catch (error) {
+        console.error("Erro ao buscar veículos: ", error);
+      } finally {
+        this.loading = false;
+      }
     },
 
     async atualizarVeiculos() {
@@ -333,7 +337,7 @@ export default {
         if (this.filtroProp.trim()) params.proposito = this.filtroProp.trim();
         if (this.filtroPlaca.trim()) params.placa = this.filtroPlaca.trim();
 
-        const response = await api.get("veiculos", { params });
+        const response = await this.$axios.get("veiculos", { params });
 
         this.veiculos = response.data;
       } catch (error) {
@@ -395,12 +399,12 @@ export default {
 
 .btn-left {
   border-radius: 5px 0 0 5px;
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
 }
 
 .btn-right {
   border-radius: 0 5px 5px 0;
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
   transform: translateX(-5px);
 }
 
@@ -414,7 +418,7 @@ export default {
   font-size: 16px;
   font-family: "Roboto";
   font-weight: 700;
-  color: #FFF;
+  color: #fff;
   margin-left: 15px;
 }
 
@@ -450,7 +454,7 @@ export default {
   font-size: 14px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #A9A7A9 !important;
+  color: #a9a7a9 !important;
 }
 
 .v-list {
@@ -462,11 +466,11 @@ export default {
 }
 
 ::v-deep .theme--dark.v-icon {
-  color: #A9A7A9;
+  color: #a9a7a9;
 }
 
 ::v-deep .v-list .v-list-item--active .v-icon {
-  color: #3366CC !important;
+  color: #3366cc !important;
 }
 
 ::v-deep .v-list-item__title {
@@ -478,7 +482,7 @@ export default {
 }
 
 .header-select {
-  color: #A9A7A9 !important;
+  color: #a9a7a9 !important;
   font-size: 12px !important;
   font-weight: 400 !important;
 }
@@ -523,7 +527,7 @@ td {
   font-size: 12px !important;
   font-family: "Roboto";
   font-weight: 400;
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
 }
 
 .conforto {
@@ -560,7 +564,7 @@ td {
 }
 
 .v-footer {
-  background-color: #FFF;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   position: fixed;

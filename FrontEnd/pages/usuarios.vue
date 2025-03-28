@@ -141,7 +141,6 @@ import {
   senhaRules,
   confirmarSenhaRule,
 } from "../services/validationsRules";
-import api from "../services/api";
 
 export default {
   name: "IndexPage",
@@ -225,7 +224,7 @@ export default {
           senha: this.formData.senha,
         };
 
-        const response = await api.post("usuarios", data);
+        const response = await this.$usuarioService.postUsuario(data);
 
         if (response.status === 201 || response.status === 200) {
           this.snackbar_sucesso = true;

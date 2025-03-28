@@ -220,7 +220,6 @@ import {
   latitudeRules,
   longitudeRules,
 } from "../../services/validationsRules";
-import api from '../../services/api';
 
 export default {
   props: ["veiculo"],
@@ -338,7 +337,7 @@ export default {
           ativo: true,
         };
 
-        const response = await api.put(`veiculos/${id}`, data);
+        const response = await this.$veiculoService.putVeiculo(id, data);
 
         if (response.status === 200 || response.status === 201) {
           this.snackbar_sucesso = true;

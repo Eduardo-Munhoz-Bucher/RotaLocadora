@@ -54,7 +54,6 @@
 <script>
 import MsgSucesso from "../snackbar/msgSucesso.vue";
 import MsgErro from "../snackbar/msgErro.vue";
-import api from "../../services/api";
 
 export default {
   props: ["veiculo"],
@@ -82,7 +81,7 @@ export default {
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
       try {
-        const response = await api.delete(`veiculos/${id}`);
+        const response = await this.$veiculoService.deleteVeiculo(id);
 
         if (response.status === 200 || response.status === 204) {
           this.snackbar_sucesso = true;
