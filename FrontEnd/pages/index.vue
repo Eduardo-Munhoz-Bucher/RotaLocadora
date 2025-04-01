@@ -1,18 +1,5 @@
 <template>
   <div class="page-container">
-    <MsgSucesso
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_sucesso"
-      @closed="onSuccessClosed"
-    />
-    <MsgErro
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_erro"
-      @closed="onErrorClosed"
-    />
-
     <v-card color="#FFF" class="formulario" rounded-xl>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
@@ -66,13 +53,10 @@
 </template>
 
 <script>
-import MsgSucesso from "../components/snackbar/msgSucesso.vue";
-import MsgErro from "../components/snackbar/msgErro.vue";
 import { emailRules } from "../services/validationsRules";
 
 export default {
   name: "IndexPage",
-  components: { MsgSucesso, MsgErro },
   data() {
     return {
       formData: {
@@ -80,10 +64,6 @@ export default {
         email: "",
         senha: "",
       },
-      msg: "",
-      timeout: 2000,
-      snackbar_sucesso: false,
-      snackbar_erro: false,
       valid: true,
       loading: false,
       showPassword: false,
@@ -106,8 +86,7 @@ export default {
 
         const response = await this.$usuarioService.postUsuarioLogin(data)
 
-        this.snackbar_sucesso = true;
-        this.msg = "Login realizado com sucesso!";
+        this.$toast.success('Login realizado com sucesso!')
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -115,19 +94,10 @@ export default {
 
         this.$router.push({ path: "/veiculos" });
       } catch (error) {
-        this.snackbar_erro = true;
-        this.msg = error.response?.data?.message || "Erro ao fazer logn!";
+        this.$toast.error(error.response?.data?.message || 'Erro ao fazer login!')
       }
 
       this.loading = false;
-    },
-
-    onErrorClosed() {
-      console.log("Snackbar de erro fechado.");
-    },
-
-    onSuccessClosed() {
-      console.log("Snackbar de sucesso fechado");
     },
 
     validate() {

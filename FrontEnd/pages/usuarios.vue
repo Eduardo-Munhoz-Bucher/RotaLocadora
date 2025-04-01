@@ -1,18 +1,5 @@
 <template>
   <div class="page-container">
-    <MsgSucesso
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_sucesso"
-      @closed="onSuccessClosed"
-    />
-    <MsgErro
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_erro"
-      @closed="onErrorClosed"
-    />
-
     <v-card class="formulario" rounded-xl>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-container>
@@ -132,8 +119,6 @@
 </template>
 
 <script>
-import MsgSucesso from "../components/snackbar/msgSucesso.vue";
-import MsgErro from "../components/snackbar/msgErro.vue";
 import {
   usuarioRules,
   aniversarioRules,
@@ -144,13 +129,8 @@ import {
 
 export default {
   name: "IndexPage",
-  components: { MsgSucesso, MsgErro },
   data() {
     return {
-      msg: "",
-      timeout: 3000,
-      snackbar_sucesso: false,
-      snackbar_erro: false,
       valid: true,
       loading: false,
       menu: false,
@@ -202,16 +182,14 @@ export default {
         !this.formData.senha ||
         !this.formData.confirmaSenha
       ) {
-        this.snackbar_erro = true;
-        this.msg = "Campos não preenchidos!";
+        this.$toast.error('Campos não preenchidos!')
         this.validate();
         this.loading = false;
         return;
       }
 
       if (this.formData.senha !== this.formData.confirmaSenha) {
-        this.snackbar_erro = true;
-        this.msg = "Senhas divergentes";
+        this.$toast.error('Senhas divergentes.')
         this.loading = false;
         return;
       }
@@ -227,8 +205,7 @@ export default {
         const response = await this.$usuarioService.postUsuario(data);
 
         if (response.status === 201 || response.status === 200) {
-          this.snackbar_sucesso = true;
-          this.msg = "Usuário cadastrado com sucesso!";
+          this.$toast.success('Usuário cadastrado com sucesso!')
 
           await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -238,8 +215,8 @@ export default {
         }
       } catch (error) {
         console.error("Erro ao criar usuário:", error);
-        this.snackbar_erro = true;
-        this.msg = "Erro ao criar usuário!";
+        
+        this.$toast.error('Erro ao criar usuário!')
       } finally {
         this.loading = false;
       }
@@ -247,14 +224,6 @@ export default {
 
     validate() {
       this.$refs.form.validate();
-    },
-
-    onSuccessClosed() {
-      console.log("Limpou a msg de sucesso");
-    },
-
-    onErrorClosed() {
-      console.log("Limpou a msg de erro");
     },
   },
 };

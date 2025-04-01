@@ -1,17 +1,5 @@
 <template>
   <div>
-    <MsgSucesso
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_sucesso"
-      @closed="onSuccessClosed"
-    />
-    <MsgErro
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_erro"
-      @closed="onErrorClosed"
-    />
     <v-dialog max-width="500" v-model="dialogDeletarVeiculo" persistent>
       <v-card light>
         <v-card-title class="pb-4">
@@ -52,20 +40,12 @@
 </template>
 
 <script>
-import MsgSucesso from "../snackbar/msgSucesso.vue";
-import MsgErro from "../snackbar/msgErro.vue";
-
 export default {
   props: ["veiculo"],
-  components: { MsgSucesso, MsgErro },
   data() {
     return {
       dialogDeletarVeiculo: true,
       placa: null,
-      msg: "",
-      timeout: 2500,
-      snackbar_sucesso: false,
-      snackbar_erro: false,
       loading: false,
     };
   },
@@ -84,8 +64,7 @@ export default {
         const response = await this.$veiculoService.deleteVeiculo(id);
 
         if (response.status === 200 || response.status === 204) {
-          this.snackbar_sucesso = true;
-          this.msg = "Veículo deletado com sucesso!";
+          this.$toast.success("Veículo deletado com sucesso!");
 
           await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -95,19 +74,10 @@ export default {
         }
       } catch (error) {
         console.error("Erro ao deletar veículo:", error);
-        this.snackbar_erro = true;
-        this.msg = "Erro ao deletar veículo!";
+        this.$toast.error("Erro ao deletar veículo!");
       } finally {
         this.loading = false;
       }
-    },
-
-    onSuccessClosed() {
-      console.log("Sucesso");
-    },
-
-    onErrorClosed() {
-      console.log("Snackbar de erro fechado.");
     },
   },
 };

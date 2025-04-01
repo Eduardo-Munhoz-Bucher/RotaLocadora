@@ -23,7 +23,7 @@ export default {
   css: ["@/assets/styles/global.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~/plugins/veiculoService.js", "~/plugins/usuarioService.js"],
+  plugins: ["~/plugins/veiculoService.js", "~/plugins/usuarioService.js", '~/plugins/toast'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

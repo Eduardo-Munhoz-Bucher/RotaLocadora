@@ -1,18 +1,5 @@
 <template>
   <div>
-    <MsgSucesso
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_sucesso"
-      @closed="onSuccessClosed"
-    />
-    <MsgErro
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_erro"
-      @closed="onErrorClosed"
-    />
-
     <v-dialog max-width="700" v-model="dialogEditarVeiculo" persistent>
       <v-card light>
         <div class="d-flex justify-space-between">
@@ -209,8 +196,6 @@
 </template>
 
 <script>
-import MsgSucesso from "../snackbar/msgSucesso.vue";
-import MsgErro from "../snackbar/msgErro.vue";
 import {
   marcaRules,
   modeloRules,
@@ -223,13 +208,8 @@ import {
 
 export default {
   props: ["veiculo"],
-  components: { MsgSucesso, MsgErro },
   data() {
     return {
-      msg: "",
-      timeout: 2500,
-      snackbar_sucesso: false,
-      snackbar_erro: false,
       dialogEditarVeiculo: true,
       marcas: [
         "Bmw",
@@ -314,8 +294,7 @@ export default {
           !this.longitude ||
           !this.conforto
         ) {
-          this.snackbar_erro = true;
-          this.msg = "Campos não preenchidos!";
+          this.$toast.error("Campos não preenchidos!");
           this.validate();
           return;
         }
@@ -340,8 +319,7 @@ export default {
         const response = await this.$veiculoService.putVeiculo(id, data);
 
         if (response.status === 200 || response.status === 201) {
-          this.snackbar_sucesso = true;
-          this.msg = "Veículo editado com sucesso!";
+          this.$toast.success("Veículo editado com sucesso");
 
           await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -351,8 +329,7 @@ export default {
         }
       } catch (error) {
         console.error("Erro ao editar veículo: ", error);
-        this.snackbar_erro = true;
-        this.msg = "Erro ao editar veículo!";
+        this.$toast.error("Erro ao editar veículo!");
       } finally {
         this.loading = false;
       }
@@ -397,7 +374,7 @@ export default {
 .header > span {
   font-size: 16px !important;
   font-weight: normal;
-  color: #FFF !important;
+  color: #fff !important;
 }
 
 .header {
@@ -422,7 +399,7 @@ export default {
   font-size: 18px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #FFF;
+  color: #fff;
 }
 
 .v-card__subtitle {
@@ -450,8 +427,8 @@ export default {
 }
 
 .header-year {
-  color: #FFF;
-  background-color: #3366CC;
+  color: #fff;
+  background-color: #3366cc;
   font-size: 12px;
   font-weight: 400;
   height: 38px;
@@ -516,7 +493,7 @@ export default {
   font-weight: 400;
   text-transform: none;
   font-family: "Roboto";
-  color: #FFF;
+  color: #fff;
 }
 
 .custom-loader {

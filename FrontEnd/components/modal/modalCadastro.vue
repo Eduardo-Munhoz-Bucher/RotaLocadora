@@ -1,18 +1,5 @@
 <template>
   <div>
-    <MsgSucesso
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_sucesso"
-      @closed="onSuccessClosed"
-    />
-    <MsgErro
-      :msg="msg"
-      :timeout="timeout"
-      :show.sync="snackbar_erro"
-      @closed="onErrorClosed"
-    />
-
     <v-dialog max-width="700" v-model="dialogCadastrarVeiculo" persistent>
       <v-card light>
         <div class="d-flex justify-space-between">
@@ -207,8 +194,6 @@
 </template>
 
 <script>
-import MsgSucesso from "../snackbar/msgSucesso.vue";
-import MsgErro from "../snackbar/msgErro.vue";
 import {
   placaRules,
   marcaRules,
@@ -221,13 +206,8 @@ import {
 } from "../../services/validationsRules";
 
 export default {
-  components: { MsgSucesso, MsgErro },
   data() {
     return {
-      msg: "",
-      timeout: 2500,
-      snackbar_sucesso: false,
-      snackbar_erro: false,
       dialogCadastrarVeiculo: true,
       years: [],
       dadosVeiculo: {
@@ -304,8 +284,7 @@ export default {
           !this.dadosVeiculo.latitude ||
           !this.dadosVeiculo.longitude
         ) {
-          this.snackbar_erro = true;
-          this.msg = "Campos não preenchidos!";
+          this.$toast.error("Campos não preenchidos!");
           this.validate();
           return;
         }
@@ -330,8 +309,7 @@ export default {
         const response = await this.$veiculoService.postVeiculo(data);
 
         if (response.status === 201 || response.status === 200) {
-          this.snackbar_sucesso = true;
-          this.msg = "Veículo cadastrado com sucesso!";
+          this.$toast.success("Veículo cadastrado com sucesso!");
 
           await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -342,19 +320,10 @@ export default {
         }
       } catch (error) {
         console.error("Erro ao criar veículo: ", error);
-        this.snackbar_erro = true;
-        this.msg = "Erro ao cadastrar veículo!";
+        this.$toast.error("Erro ao cadastrar veículo!");
       } finally {
         this.loading = false;
       }
-    },
-
-    onErrorClosed() {
-      console.log("Snackbar de erro fechado.");
-    },
-
-    onSuccessClosed() {
-      console.log("Sucesso");
     },
 
     validate() {
@@ -402,7 +371,7 @@ export default {
   font-size: 18px;
   font-family: "Roboto";
   font-weight: 400;
-  color: #FFF;
+  color: #fff;
 }
 
 .v-card__subtitle {
@@ -437,8 +406,8 @@ export default {
 }
 
 .header-year {
-  color: #FFF;
-  background-color: #3366CC;
+  color: #fff;
+  background-color: #3366cc;
   font-size: 12px;
   font-weight: 400;
   height: 38px;
@@ -507,7 +476,7 @@ export default {
   font-weight: 400;
   text-transform: none;
   font-family: "Roboto";
-  color: #FFF;
+  color: #fff;
 }
 
 .custom-loader {
