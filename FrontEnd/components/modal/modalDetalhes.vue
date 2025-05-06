@@ -179,7 +179,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #mapContainer {
   max-width: 100%;
   min-height: 250px;
@@ -274,7 +274,7 @@ export default {
 
 ::v-deep .v-rating .v-icon {
   padding: 0 0 0 4px;
-  color: var(--primary);
+  color: $primary;
 }
 
 .card-leaflet {

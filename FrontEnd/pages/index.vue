@@ -84,9 +84,9 @@ export default {
           senha: this.formData.senha,
         };
 
-        const response = await this.$usuarioService.postUsuarioLogin(data)
+        const response = await this.$usuarioService.postUsuarioLogin(data);
 
-        this.$toast.success('Login realizado com sucesso!')
+        this.$toast.success("Login realizado com sucesso!");
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -94,7 +94,9 @@ export default {
 
         this.$router.push({ path: "/veiculos" });
       } catch (error) {
-        this.$toast.error(error.response?.data?.message || 'Erro ao fazer login!')
+        this.$toast.error(
+          error.response?.data?.message || "Erro ao fazer login!"
+        );
       }
 
       this.loading = false;
@@ -107,28 +109,11 @@ export default {
 };
 </script>
 
-<style scoped>
-.page-container {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  background-image: url("../assets/img/fundo-tela.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+<style lang="scss" scoped>
+@import "~/assets/variables.scss";
 
-.page-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
-  z-index: 0;
+.page-container {
+  @include page-container-style; // Aplica o mixin
 }
 
 .formulario {

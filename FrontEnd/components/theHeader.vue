@@ -87,7 +87,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .RotaLocadora {
   width: 188px;
   height: 38px;
@@ -102,7 +102,7 @@ export default {
 
 .active-btn {
   background-color: rgba(0, 125, 240, 0.1);
-  color: var(--primary); 
+  color: $primary; 
 }
 
 .cor-btn {
@@ -150,7 +150,7 @@ export default {
 }
 
 .btn-sair {
-  color: var(--color-red);
+  color: #E8363B;
   margin: 0;
   font-size: 14px;
   font-weight: 400;

@@ -360,7 +360,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container-filtros {
   display: flex;
   align-items: center;
@@ -513,7 +513,7 @@ export default {
   > thead
   > tr
   > th {
-  color: var(--primary) !important;
+  color: $primary !important;
   font-weight: 700;
   font-size: 14px;
 }
