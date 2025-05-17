@@ -96,7 +96,7 @@ export default {
       } catch (error) {
         this.$toast.error(
           error.response?.data?.message || "Erro ao fazer login!"
-        );
+        );        
       }
 
       this.loading = false;
