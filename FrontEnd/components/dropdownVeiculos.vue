@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 .v-list-item:hover {
-  background: #DFDFDF;
+  background: #dfdfdf;
 }
 
 .v-list {

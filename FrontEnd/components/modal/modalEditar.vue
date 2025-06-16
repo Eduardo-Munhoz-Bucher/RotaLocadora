@@ -335,14 +335,6 @@ export default {
       }
     },
 
-    onErrorClosed() {
-      console.log("Snackbar de erro fechado.");
-    },
-
-    onSuccessClosed() {
-      console.log("Sucesso");
-    },
-
     validate() {
       this.$refs.form.validate();
     },
